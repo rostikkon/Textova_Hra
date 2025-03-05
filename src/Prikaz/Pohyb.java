@@ -1,11 +1,11 @@
-package command;
+package Prikaz;
 
 import Svet.SvetovaMapa;
 import Svet.Lokace;
 
 import java.util.Scanner;
 
-public class Pohyb implements Command {
+public class Pohyb implements Prikaz {
     private SvetovaMapa svet;
     private Scanner scanner;
 
@@ -15,7 +15,7 @@ public class Pohyb implements Command {
     }
 
     @Override
-    public String execute() {
+    public String vykonej() {
         System.out.println("Kam chces jit? (sever/jih)");
         String smer = scanner.next().toLowerCase();
         Lokace aktualni = svet.getAktualniPozice();
@@ -33,7 +33,7 @@ public class Pohyb implements Command {
     }
 
     @Override
-    public boolean exit() {
+    public boolean ukoncit() {
         return false;
     }
 }
