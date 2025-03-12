@@ -1,5 +1,12 @@
 package Postavy;
 
 public class Pirat extends Postava {
-    public void interakce() {}
+    public Pirat() {
+        super("Pirátský velitel");
+    }
+
+    @Override
+    public String interakce() {
+        return "Piráti tě obklopili. Můžeš bojovat nebo se pokusit uniknout.";
+    }
 }

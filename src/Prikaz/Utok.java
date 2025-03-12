@@ -1,8 +1,8 @@
 package Prikaz;
 
-public class Pouzit implements Prikaz {
+public class Utok implements Prikaz {
     public String vykonej() {
-        return "Použil jsi předmět ze svého inventáře.";
+        return "Bojuješ s piráty a bráníš svou loď!";
     }
 
     public boolean ukoncit() {
