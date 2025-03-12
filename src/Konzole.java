@@ -8,6 +8,10 @@ public class Konzole {
     private boolean exit = false;
     private Scanner scanner = new Scanner(System.in);
     private HashMap<String, Prikaz> prikazy = new HashMap<>();
+    private SvetovaMapa svet;
+    private Inventar inventar;
+    private Hrac hrac;
+    private Pirat pirat;
 
     public void inicializace() {
         prikazy.put("jdi", new Pohyb(new SvetovaMapa()));
@@ -20,13 +24,22 @@ public class Konzole {
         prikazy.put("mluvit", new Mluvit());
         prikazy.put("prozkoumat", new Prozkoumat());
         prikazy.put("stav", new Stav());
-        prikazy.put("utok", new Utok());
-        prikazy.put("unik", new Unik());
+        prikazy.put("utok", new Utok(hrac, pirat, inventar));
+        prikazy.put("unik", new Unik(hrac));
     }
 
     public void start() {
+
+        svet = new SvetovaMapa();
+        svet.nactiMapu();
+        inventar = new Inventar();
+        hrac = new Hrac(svet, inventar);
+        pirat = new Pirat(svet, inventar);
+
         inicializace();
+
         System.out.println("Vítejte ve hře! Zadejte příkaz.");
+
         while (!exit) {
             System.out.print(">> ");
             String vstup = scanner.nextLine().trim().toLowerCase();

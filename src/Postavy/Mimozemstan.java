@@ -1,8 +1,11 @@
 package Postavy;
 
+import Prikaz.Inventar;
+import Svet.SvetovaMapa;
+
 public class Mimozemstan extends Postava {
-    public Mimozemstan() {
-        super("Mimozemšťan");
+    public Mimozemstan(SvetovaMapa svet, Inventar inventar) {
+        super("Mimozemšťan", svet, inventar, 100);
     }
 
     @Override

@@ -5,9 +5,27 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-class Inventar implements Prikaz {
+public class Inventar implements Prikaz {
     private ArrayList<Predmet> inventar = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+
+    public boolean maPredmet(String nazev) {
+        for (Predmet predmet : inventar) {
+            if (predmet.getNazev().equalsIgnoreCase(nazev)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Predmet getPredmet(String nazev) {
+        for (Predmet predmet : inventar) {
+            if (predmet.getNazev().equalsIgnoreCase(nazev)) {
+                return predmet;
+            }
+        }
+        return null;
+    }
 
     @Override
     public String vykonej() {
