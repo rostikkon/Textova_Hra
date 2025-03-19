@@ -1,5 +1,8 @@
 package Svet;
 
+import Postavy.*;
+import Prikaz.Inventar;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,7 +14,7 @@ public class SvetovaMapa {
     private int aktualniPozice = 0;
 
     public boolean nactiMapu() {
-        try (BufferedReader br = new BufferedReader(new FileReader("Svet/mistnost.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/Svet/mistnost.csv"))) {
             String radek;
             while ((radek = br.readLine()) != null) {
                 String[] hodnoty = radek.split(";");
@@ -20,7 +23,7 @@ public class SvetovaMapa {
                         Integer.parseInt(hodnoty[0]),
                         Arrays.copyOfRange(hodnoty, 2, 4)
                 );
-                svet.put(Integer.parseInt(hodnoty[0]), lokace);
+                svet.put(Integer.valueOf(hodnoty[0]), lokace);
             }
             return true;
         } catch (IOException e) {
@@ -32,8 +35,12 @@ public class SvetovaMapa {
         return svet.get(aktualniPozice);
     }
 
-    public void setAktualniPozice(int aktualniPozice) {
-        this.aktualniPozice = aktualniPozice;
+    public Lokace getLokace(int id) {
+        return svet.get(id);
+    }
+
+    public void setAktualniPozice(int id) {
+        aktualniPozice = id;
     }
 
     public HashMap<Integer, Lokace> getSvet() {

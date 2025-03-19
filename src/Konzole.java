@@ -14,7 +14,7 @@ public class Konzole {
     private Pirat pirat;
 
     public void inicializace() {
-        prikazy.put("jdi", new Pohyb(new SvetovaMapa()));
+        prikazy.put("jdi", new Pohyb(svet, hrac, inventar));
         prikazy.put("konec", new Konec());
         prikazy.put("pomoc", new Pomoc());
         prikazy.put("napoveda", new Napoveda());
@@ -28,6 +28,15 @@ public class Konzole {
         prikazy.put("unik", new Unik(hrac));
     }
 
+    private void nastavPostavyAPredmety() {
+        svet.getSvet().get(0).nastavPostavu(new Strazce(svet, inventar));
+        svet.getSvet().get(1).nastavPredmet(new Surovina("Plazmový generátor"));
+        svet.getSvet().get(3).nastavPostavu(new Obchodnik(svet, inventar));
+        svet.getSvet().get(4).nastavPostavu(new Pirat(svet, inventar));
+        svet.getSvet().get(5).nastavPostavu(new Vedec(svet, inventar));
+        svet.getSvet().get(7).nastavPredmet(new Surovina("Hyperionový krystal"));
+    }
+
     public void start() {
 
         svet = new SvetovaMapa();
@@ -37,6 +46,7 @@ public class Konzole {
         pirat = new Pirat(svet, inventar);
 
         inicializace();
+        nastavPostavyAPredmety();
 
         System.out.println("Vítejte ve hře! Zadejte příkaz.");
 

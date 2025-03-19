@@ -1,35 +1,45 @@
 package Prikaz;
 
+import Postavy.Hrac;
 import Svet.SvetovaMapa;
 import Svet.Lokace;
+import Prikaz.Inventar;
 
 import java.util.Scanner;
 
 public class Pohyb implements Prikaz {
     private SvetovaMapa svet;
-    private Scanner scanner;
+    private Hrac hrac;
+    private Inventar inventar;
 
-    public Pohyb(SvetovaMapa svet) {
+    public Pohyb(SvetovaMapa svet, Hrac hrac, Inventar inventar) {
         this.svet = svet;
-        this.scanner = new Scanner(System.in);
+        this.hrac = hrac;
+        this.inventar = inventar;
     }
 
     @Override
     public String vykonej() {
-        System.out.println("Kam chces jit? (sever/jih)");
-        String smer = scanner.next().toLowerCase();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Kam chceš jít? (Zadej název lokace)");
+        String cil = scanner.nextLine().trim();
+
         Lokace aktualni = svet.getAktualniPozice();
         int[] sousedi = aktualni.getSousedi();
 
-        if (smer.equals("sever") && sousedi[0] != -1) {
-            svet.setAktualniPozice(sousedi[0]);
-            return "Nyni se nachazis v: " + svet.getAktualniPozice().getNazev();
-        } else if (smer.equals("jih") && sousedi[1] != -1) {
-            svet.setAktualniPozice(sousedi[1]);
-            return "Nyni se nachazis v: " + svet.getAktualniPozice().getNazev();
-        } else {
-            return "Tymto smerem nelze jit.";
+        for (int idSouseda : sousedi) {
+            if (idSouseda != -1 && svet.getSvet().containsKey(idSouseda)) {
+                Lokace sousedniLokace = svet.getSvet().get(idSouseda);
+                if (sousedniLokace.getNazev().equalsIgnoreCase(cil)) {
+                    svet.setAktualniPozice(idSouseda);
+                    Lokace novaPozice = svet.getAktualniPozice();
+                    novaPozice.provedAkce(hrac, inventar);
+                    return "Nyní se nacházíš v: " + novaPozice.getNazev();
+                }
+            }
         }
+
+        return "Tam se nemůžeš dostat.";
     }
 
     @Override

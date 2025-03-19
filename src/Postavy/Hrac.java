@@ -2,7 +2,6 @@ package Postavy;
 
 import Prikaz.Inventar;
 import Svet.SvetovaMapa;
-import Svet.Zbran;
 
 public class Hrac extends Postava {
     private int hp = 100;

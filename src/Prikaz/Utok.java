@@ -2,7 +2,6 @@ package Prikaz;
 
 import Postavy.Hrac;
 import Postavy.Pirat;
-import Prikaz.Inventar;
 import Svet.Zbran;
 
 import java.util.Random;

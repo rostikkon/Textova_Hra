@@ -1,12 +1,15 @@
 package Postavy;
 
+import Prikaz.Inventar;
+import Svet.SvetovaMapa;
+
 public class Strazce extends Postava {
-    public Strazce() {
-        super("Strážce ruin");
+    public Strazce(SvetovaMapa svet, Inventar inventar) {
+        super("Strážce ruin", svet, inventar, 100);
     }
 
     @Override
     public String interakce() {
-        return "Strážce ruin tě varuje: Pouze ti hodní smí vstoupit!";
+        return "Strážce ruin říká: Pouze ten, kdo má čisté srdce, může projít.";
     }
 }
