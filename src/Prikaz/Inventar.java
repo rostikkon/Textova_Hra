@@ -27,6 +27,10 @@ public class Inventar implements Prikaz {
         return null;
     }
 
+    public ArrayList<Predmet> getPredmety() {
+        return inventar;
+    }
+
     @Override
     public String vykonej() {
         if (inventar.isEmpty()) {

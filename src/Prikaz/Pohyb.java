@@ -34,11 +34,14 @@ public class Pohyb implements Prikaz {
                     svet.setAktualniPozice(idSouseda);
                     Lokace novaPozice = svet.getAktualniPozice();
                     novaPozice.provedAkce(hrac, inventar);
+                    if (novaPozice.getNazev().equals("Základna") && hrac.isHyperpohonOpraven()) {
+                        System.out.println("Gratuluji! Opravil jsi hyperpohon a úspěšně ses vrátil na základnu.");
+                        System.exit(0);
+                    }
                     return "Nyní se nacházíš v: " + novaPozice.getNazev();
                 }
             }
         }
-
         return "Tam se nemůžeš dostat.";
     }
 

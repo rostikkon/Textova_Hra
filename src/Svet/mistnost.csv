@@ -1,8 +1,9 @@
-0;Planeta Zephyria;1;-1;
-1;Planeta Nixus;2;0;
-2;Asteroidova stanice;3;1;
-3;Orbitalni trziste;4;2;
-4;Cerna dira;5;3;
-5;Mesicni laboratore;6;4;
-6;Tajemna mlhovina;7;5;
-7;Vrak mimozemske lodi;-1;6;
+0;Základna;1;-1
+1;Planeta Zephyria;2;0
+2;Planeta Nixus;3;1
+3;Asteroidová stanice;4;2
+4;Orbitální tržiště;5;3
+5;Černá díra;6;4
+6;Měsíční laboratoř;7;5
+7;Tajemná mlhovina;8;6
+8;Vrak mimozemské lodi;-1;7

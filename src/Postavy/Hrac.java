@@ -5,6 +5,7 @@ import Svet.SvetovaMapa;
 
 public class Hrac extends Postava {
     private int hp = 100;
+    private boolean hyperpohonOpraven = false;
 
     public Hrac(SvetovaMapa svet, Inventar inventar) {
         super("Kapitán lodi Aurora", svet, inventar, 100);
@@ -23,6 +24,13 @@ public class Hrac extends Postava {
         }
     }
 
+    public boolean isHyperpohonOpraven() {
+        return hyperpohonOpraven;
+    }
+
+    public void setHyperpohonOpraven(boolean opraven) {
+        this.hyperpohonOpraven = opraven;
+    }
 
     @Override
     public String interakce() {

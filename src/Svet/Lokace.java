@@ -32,15 +32,30 @@ public class Lokace {
 
     public void provedAkce(Hrac hrac, Inventar inventar) {
         System.out.println("Dorazil jsi na místo: " + nazev);
-
+        switch (nazev) {
+            case "Planeta Zephyria":
+                if (!inventar.maPredmet("Hyperionový krystal")) {
+                    System.out.println("Strážce ruin ti brání v průchodu!");
+                    return;
+                }
+                break;
+            case "Měsíční laboratoř":
+                if (inventar.maPredmet("Plazmový generátor") &&
+                        inventar.maPredmet("Hyperionový krystal") &&
+                        inventar.maPredmet("Ionizační palivo")) {
+                    System.out.println("Dr. Velkar opravil hyperpohon! Můžeš se vrátit na základnu.");
+                    hrac.setHyperpohonOpraven(true);
+                }
+                break;
+        }
         if (postava != null) {
-            System.out.println("Narazil jsi na: " + postava.getJmeno());
             System.out.println(postava.interakce());
         }
 
         if (predmet != null) {
             inventar.pridatDoInventare(predmet);
-            System.out.println("Našel jsi " + predmet.getNazev() + " a přidal ho do inventáře!");
+            System.out.println("Našel jsi " + predmet.getNazev());
+            predmet = null;
         }
     }
 

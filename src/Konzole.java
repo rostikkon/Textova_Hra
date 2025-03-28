@@ -12,29 +12,30 @@ public class Konzole {
     private Inventar inventar;
     private Hrac hrac;
     private Pirat pirat;
-
     public void inicializace() {
         prikazy.put("jdi", new Pohyb(svet, hrac, inventar));
         prikazy.put("konec", new Konec());
         prikazy.put("pomoc", new Pomoc());
         prikazy.put("napoveda", new Napoveda());
-        prikazy.put("vzit", new Vzit());
-        prikazy.put("polozit", new Polozit());
-        prikazy.put("pouzit", new Pouzit());
-        prikazy.put("mluvit", new Mluvit());
-        prikazy.put("prozkoumat", new Prozkoumat());
-        prikazy.put("stav", new Stav());
+        prikazy.put("vezmi", new Vzit(inventar, svet.getAktualniPozice()));
+        prikazy.put("poloz", new Polozit(inventar, svet.getAktualniPozice()));
+        prikazy.put("pouzij", new Pouzit(inventar));
+        prikazy.put("mluv", new Mluvit(svet.getAktualniPozice()));
+        prikazy.put("prozkoumej", new Prozkoumat(svet.getAktualniPozice()));
+        prikazy.put("stav", new Stav(hrac, inventar));
         prikazy.put("utok", new Utok(hrac, pirat, inventar));
         prikazy.put("unik", new Unik(hrac));
     }
 
     private void nastavPostavyAPredmety() {
-        svet.getSvet().get(0).nastavPostavu(new Strazce(svet, inventar));
-        svet.getSvet().get(1).nastavPredmet(new Surovina("Plazmový generátor"));
-        svet.getSvet().get(3).nastavPostavu(new Obchodnik(svet, inventar));
-        svet.getSvet().get(4).nastavPostavu(new Pirat(svet, inventar));
-        svet.getSvet().get(5).nastavPostavu(new Vedec(svet, inventar));
-        svet.getSvet().get(7).nastavPredmet(new Surovina("Hyperionový krystal"));
+        svet.getLokace(1).nastavPredmet(new Surovina("Hyperionový krystal"));
+        svet.getLokace(2).nastavPredmet(new Surovina("Plazmový generátor"));
+        svet.getLokace(8).nastavPredmet(new Surovina("Ionizační palivo"));
+        svet.getLokace(3).nastavPredmet(new Zbran("Laserová pistole", 20));
+        svet.getLokace(1).nastavPostavu(new Strazce(svet, inventar));
+        svet.getLokace(4).nastavPostavu(new Obchodnik(svet, inventar));
+        svet.getLokace(5).nastavPostavu(new Pirat(svet, inventar));
+        svet.getLokace(6).nastavPostavu(new Vedec(svet, inventar));
     }
 
     public void start() {
