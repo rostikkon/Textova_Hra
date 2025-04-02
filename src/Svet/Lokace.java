@@ -67,18 +67,38 @@ public class Lokace {
         return sb.toString();
     }
 
+    /**
+     * Nastaví nový popis lokace.
+     *
+     * @param popis Nový popis lokace.
+     */
     public void setPopis(String popis) {
         this.popis = popis;
     }
 
+    /**
+     * Nastaví postavu do lokace.
+     *
+     * @param postava Postava, která bude v lokaci.
+     */
     public void nastavPostavu(Postava postava) {
         this.postava = postava;
     }
 
+    /**
+     * Vrátí seznam předmětů v lokaci.
+     *
+     * @return Seznam předmětů.
+     */
     public ArrayList<Predmet> getPredmety() {
         return predmety;
     }
 
+    /**
+     * Přidá předmět do lokace.
+     *
+     * @param predmet Předmět, který se má přidat.
+     */
     public void pridejPredmet(Predmet predmet) {
         this.predmety.add(predmet);
     }
@@ -93,18 +113,38 @@ public class Lokace {
         System.out.println(getZakladniPopis());
     }
 
+    /**
+     * Vrátí název lokace.
+     *
+     * @return Název lokace.
+     */
     public String getNazev() {
         return nazev;
     }
 
+    /**
+     * Vrátí postavu v lokaci.
+     *
+     * @return Postava v lokaci nebo {@code null}, pokud není žádná.
+     */
     public Postava getPostava() {
         return postava;
     }
 
+    /**
+     * Vrátí ID lokace.
+     *
+     * @return ID lokace.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Vrátí pole sousedních lokací.
+     *
+     * @return Pole sousedních lokací.
+     */
     public int[] getSousedi() {
         return sousedi;
     }

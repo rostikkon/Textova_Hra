@@ -27,6 +27,12 @@ public class Inventar implements Prikaz {
         return false;
     }
 
+    /**
+     * Vrátí předmět z inventáře.
+     *
+     * @param nazev Název předmětu.
+     * @return Předmět nebo {@code null}, pokud není v inventáři.
+     */
     public Predmet getPredmet(String nazev) {
         for (Predmet predmet : inventar) {
             if (predmet.getNazev().equalsIgnoreCase(nazev)) {
@@ -40,6 +46,11 @@ public class Inventar implements Prikaz {
         return inventar;
     }
 
+    /**
+     * Vykonává akci s inventářem (nevyužívá se přímo).
+     *
+     * @return Popis stavu inventáře.
+     */
     @Override
     public String vykonej() {
         if (inventar.isEmpty()) {
@@ -51,11 +62,22 @@ public class Inventar implements Prikaz {
         return "Uzavřel jsi inventář.";
     }
 
+    /**
+     * Vrátí, zda má být ukončena hra po vykonání příkazu.
+     *
+     * @return Vždy vrátí {@code false}.
+     */
     @Override
     public boolean ukoncit() {
         return false;
     }
 
+    /**
+     * Přidá předmět do inventáře.
+     *
+     * @param predmet Předmět, který se má přidat.
+     * @return {@code true}, pokud se předmět úspěšně přidal, jinak {@code false}.
+     */
     public boolean pridatDoInventare(Predmet predmet) {
         if (inventar.size() >= MAX_KAPACITA) {
             System.out.println("Inventář je plný! Odstraňte nějaké předměty.");
@@ -65,6 +87,12 @@ public class Inventar implements Prikaz {
         return true;
     }
 
+    /**
+     * Odebere předmět z inventáře.
+     *
+     * @param predmet Předmět, který se má odebrat.
+     * @return {@code true}, pokud se předmět úspěšně odebrel, jinak {@code false}.
+     */
     public boolean odebratZInventare(Predmet predmet) {
         return inventar.remove(predmet);
     }
