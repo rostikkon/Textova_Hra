@@ -2,17 +2,19 @@ package Prikaz;
 
 import Svet.Lokace;
 import Postavy.Postava;
+import Svet.SvetovaMapa;
 
 public class Mluvit implements Prikaz {
-    private Lokace lokace;
+    private SvetovaMapa svet;
 
-    public Mluvit(Lokace lokace) {
-        this.lokace = lokace;
+    public Mluvit(SvetovaMapa svet) {
+        this.svet = svet;
     }
 
     @Override
     public String vykonej() {
-        Postava postava = lokace.getPostava();
+        Lokace aktualniLokace = svet.getAktualniPozice();
+        Postava postava = aktualniLokace.getPostava();
         if (postava == null) {
             return "Zde není nikdo, s kým bys mohl mluvit.";
         }

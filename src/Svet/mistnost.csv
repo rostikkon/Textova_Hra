@@ -1,9 +1,8 @@
-0;Základna;1;-1
-1;Planeta Zephyria;2;0
-2;Planeta Nixus;3;1
-3;Asteroidová stanice;4;2
-4;Orbitální tržiště;5;3
-5;Černá díra;6;4
-6;Měsíční laboratoř;7;5
-7;Tajemná mlhovina;8;6
-8;Vrak mimozemské lodi;-1;7
+0;Základna;1;-1;"Hlavní velitelské centrum lodi Aurora. Všechny systémy fungují normálně kromě poškozeného hyperpohonu. Na panelech blikají varovné kontrolky."
+1;Planeta Zephyria;2;0;"Pouštní planeta se starověkými ruinami. Písečné bouře zde vytvořily podivné skalní útvary. Teplota dosahuje 50°C."
+2;Planeta Nixus;3;1;"Ledový svět s podzemními jeskyněmi. Teplota klesá pod -120°C. Světlo pochází z bioluminescentních rostlin."
+3;Asteroidová stanice;4;2;"Opuštěná hornická stanice na asteroidu. Vzduch je zde řídký a stanice je poškozená. V rozbitých chodbách se ozývá skřípění kovu."
+4;Orbitální tržiště;5;3;"Hlukem pulzující vesmírné tržiště. Stovky obchodníků z celé galaxie zde nabízejí své zboží za různé ceny."
+5;Černá díra;6;4;"Hrozivá černá díra pohlcující vše kolem. Gravitace zde deformuje časoprostor. Lodní systémy blikají varováním."
+6;Měsíční laboratoř;7;5;"Vědecká laboratoř na měsíci. Všechny přístroje vypadají vyspěle. Vzduch voní po sterilizaci."
+7;Vrak mimozemské lodi;-1;6;"Trosečník neznámého původu. Stěny jsou pokryty podivnými symboly. Cítíte, že zde něco není v pořádku."

@@ -1,5 +1,6 @@
 package Svet;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import Postavy.*;
 import Prikaz.*;
@@ -9,9 +10,10 @@ public class Lokace {
     private int id;
     private int[] sousedi;
     private Postava postava;
-    private Predmet predmet;
+    private ArrayList<Predmet> predmety;
+    private String popis;
 
-    public Lokace(String nazev, int id, String[] sousedi) {
+    public Lokace(String nazev, int id, String[] sousedi, String popis) {
         this.nazev = nazev;
         this.id = id;
         this.sousedi = new int[2];
@@ -19,44 +21,49 @@ public class Lokace {
             this.sousedi[i] = Integer.parseInt(sousedi[i]);
         }
         this.postava = null;
-        this.predmet = null;
+        this.predmety = new ArrayList<>();
+        this.popis = popis;
+    }
+
+    public String getZakladniPopis() {
+        return "== " + nazev + " ==\n" + popis;
+    }
+
+    public String getPodrobnyPopis() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("=== ").append(nazev).append(" ===\n");
+        sb.append(popis).append("\n");
+        if (postava != null) {
+            sb.append("\n[Postava] ").append(postava.getJmeno());
+        }
+        if (!predmety.isEmpty()) {
+            sb.append("\n[Předměty]: ");
+            for (Predmet p : predmety) {
+                sb.append(p.getNazev()).append(", ");
+            }
+            sb.setLength(sb.length() - 2);
+        }
+        return sb.toString();
+    }
+
+    public void setPopis(String popis) {
+        this.popis = popis;
     }
 
     public void nastavPostavu(Postava postava) {
         this.postava = postava;
     }
 
-    public void nastavPredmet(Predmet predmet) {
-        this.predmet = predmet;
+    public ArrayList<Predmet> getPredmety() {
+        return predmety;
+    }
+
+    public void pridejPredmet(Predmet predmet) {
+        this.predmety.add(predmet);
     }
 
     public void provedAkce(Hrac hrac, Inventar inventar) {
-        System.out.println("Dorazil jsi na místo: " + nazev);
-        switch (nazev) {
-            case "Planeta Zephyria":
-                if (!inventar.maPredmet("Hyperionový krystal")) {
-                    System.out.println("Strážce ruin ti brání v průchodu!");
-                    return;
-                }
-                break;
-            case "Měsíční laboratoř":
-                if (inventar.maPredmet("Plazmový generátor") &&
-                        inventar.maPredmet("Hyperionový krystal") &&
-                        inventar.maPredmet("Ionizační palivo")) {
-                    System.out.println("Dr. Velkar opravil hyperpohon! Můžeš se vrátit na základnu.");
-                    hrac.setHyperpohonOpraven(true);
-                }
-                break;
-        }
-        if (postava != null) {
-            System.out.println(postava.interakce());
-        }
-
-        if (predmet != null) {
-            inventar.pridatDoInventare(predmet);
-            System.out.println("Našel jsi " + predmet.getNazev());
-            predmet = null;
-        }
+        System.out.println(getZakladniPopis());
     }
 
     public String getNazev() {
@@ -67,10 +74,6 @@ public class Lokace {
         return postava;
     }
 
-    public Predmet getPredmet() {
-        return predmet;
-    }
-
     public int getId() {
         return id;
     }
@@ -79,14 +82,4 @@ public class Lokace {
         return sousedi;
     }
 
-    @Override
-    public String toString() {
-        return "Lokace{" +
-                "nazev='" + nazev + '\'' +
-                ", id=" + id +
-                ", sousedi=" + Arrays.toString(sousedi) +
-                ", postava=" + (postava != null ? postava.getJmeno() : "žádná") +
-                ", predmet=" + (predmet != null ? predmet.getNazev() : "žádný") +
-                '}';
-    }
 }

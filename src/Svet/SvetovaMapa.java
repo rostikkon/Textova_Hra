@@ -14,19 +14,26 @@ public class SvetovaMapa {
     private int aktualniPozice = 0;
 
     public boolean nactiMapu() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/Svet/mistnost.csv"))) {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/Svet/mistnost.csv"));
             String radek;
+
             while ((radek = br.readLine()) != null) {
                 String[] hodnoty = radek.split(";");
+
                 Lokace lokace = new Lokace(
                         hodnoty[1],
                         Integer.parseInt(hodnoty[0]),
-                        Arrays.copyOfRange(hodnoty, 2, 4)
+                        new String[]{hodnoty[2], hodnoty[3]},
+                        hodnoty[4]
                 );
-                svet.put(Integer.valueOf(hodnoty[0]), lokace);
+
+                svet.put(Integer.parseInt(hodnoty[0]), lokace);
             }
+            br.close();
             return true;
-        } catch (IOException e) {
+        } catch (Exception e) {
+            System.out.println("Chyba: " + e.getMessage());
             return false;
         }
     }

@@ -1,16 +1,17 @@
 package Prikaz;
 
 import Postavy.Hrac;
+import Svet.Palivo;
 import Svet.SvetovaMapa;
 import Svet.Lokace;
 import Prikaz.Inventar;
-
 import java.util.Scanner;
 
 public class Pohyb implements Prikaz {
     private SvetovaMapa svet;
     private Hrac hrac;
     private Inventar inventar;
+    private Scanner scanner = new Scanner(System.in);
 
     public Pohyb(SvetovaMapa svet, Hrac hrac, Inventar inventar) {
         this.svet = svet;
@@ -20,29 +21,51 @@ public class Pohyb implements Prikaz {
 
     @Override
     public String vykonej() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Kam chceš jít? (Zadej název lokace)");
-        String cil = scanner.nextLine().trim();
+        if (!inventar.maPredmet("Palivo")) {
+            return "Nemáte dostatek paliva pro přesun!";
+        }
 
         Lokace aktualni = svet.getAktualniPozice();
-        int[] sousedi = aktualni.getSousedi();
 
-        for (int idSouseda : sousedi) {
-            if (idSouseda != -1 && svet.getSvet().containsKey(idSouseda)) {
-                Lokace sousedniLokace = svet.getSvet().get(idSouseda);
-                if (sousedniLokace.getNazev().equalsIgnoreCase(cil)) {
-                    svet.setAktualniPozice(idSouseda);
-                    Lokace novaPozice = svet.getAktualniPozice();
-                    novaPozice.provedAkce(hrac, inventar);
-                    if (novaPozice.getNazev().equals("Základna") && hrac.isHyperpohonOpraven()) {
-                        System.out.println("Gratuluji! Opravil jsi hyperpohon a úspěšně ses vrátil na základnu.");
-                        System.exit(0);
-                    }
-                    return "Nyní se nacházíš v: " + novaPozice.getNazev();
-                }
+        System.out.println("\nDostupné směry:");
+        boolean maSousedy = false;
+        for (int idSouseda : aktualni.getSousedi()) {
+            if (idSouseda != -1) {
+                Lokace soused = svet.getLokace(idSouseda);
+                System.out.println("- " + soused.getNazev());
+                maSousedy = true;
             }
         }
-        return "Tam se nemůžeš dostat.";
+
+        if (!maSousedy) {
+            return "Nemáš kam jít. Jsou to všechny dostupné lokace.";
+        }
+
+        while (true) {
+            System.out.print("\nKam chceš jít? (nebo 'zpet'): ");
+            String cil = scanner.nextLine().trim();
+
+            if (cil.equalsIgnoreCase("zpet")) {
+                return "";
+            }
+
+            for (int idSouseda : aktualni.getSousedi()) {
+                if (idSouseda != -1) {
+                    Lokace soused = svet.getLokace(idSouseda);
+                    if (soused.getNazev().equalsIgnoreCase(cil)) {
+                        svet.setAktualniPozice(idSouseda);
+                        System.out.println("Přesun na novou lokaci. Spotřebováno palivo.");
+                        inventar.odebratZInventare(new Palivo());
+
+                        System.out.println(svet.getAktualniPozice().getZakladniPopis());
+
+                        return "";
+                    }
+                }
+            }
+
+            System.out.println("Neplatný cíl. Zadej platný název lokace.");
+        }
     }
 
     @Override

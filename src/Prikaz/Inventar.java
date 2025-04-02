@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Inventar implements Prikaz {
     private ArrayList<Predmet> inventar = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
+    private static final int MAX_KAPACITA = 5;
 
     public boolean maPredmet(String nazev) {
         for (Predmet predmet : inventar) {
@@ -48,11 +49,12 @@ public class Inventar implements Prikaz {
     }
 
     public boolean pridatDoInventare(Predmet predmet) {
-        if (predmet != null) {
-            inventar.add(predmet);
-            return true;
+        if (inventar.size() >= MAX_KAPACITA) {
+            System.out.println("Inventář je plný! Odstraňte nějaké předměty.");
+            return false;
         }
-        return false;
+        inventar.add(predmet);
+        return true;
     }
 
     public boolean odebratZInventare(Predmet predmet) {

@@ -20,6 +20,14 @@ public class Utok implements Prikaz {
 
     @Override
     public String vykonej() {
+
+        if (inventar.maPredmet("Zbraň")) {
+            int sance = rand.nextInt(100);
+            if (sance > 80) {
+                return "Piráti vidí vaši zbraň a rozhodli se neútočit.";
+            }
+        }
+
         if (!inventar.maPredmet("Zbraň")) {
             return "Nemáš zbraň! Piráti tě snadno přemohli. Konec hry.";
         }

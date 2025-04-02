@@ -32,5 +32,4 @@ public class Stav implements Prikaz {
     public boolean ukoncit() {
         return false;
     }
-
 }

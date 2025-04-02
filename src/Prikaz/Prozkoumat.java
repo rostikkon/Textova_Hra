@@ -1,27 +1,45 @@
 package Prikaz;
 
+import Postavy.Postava;
 import Svet.Lokace;
+import Svet.Predmet;
+import Svet.SvetovaMapa;
+
+import java.util.ArrayList;
 
 public class Prozkoumat implements Prikaz {
-    private Lokace lokace;
+    private SvetovaMapa svet;
 
-    public Prozkoumat(Lokace lokace) {
-        this.lokace = lokace;
+    public Prozkoumat(SvetovaMapa svet) {
+        this.svet = svet;
     }
 
     @Override
     public String vykonej() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Nacházíš se v: ").append(lokace.getNazev()).append("\n");
-
-        if (lokace.getPostava() != null) {
-            sb.append("Vidíš: ").append(lokace.getPostava().getJmeno()).append("\n");
+        Lokace aktualniLokace = svet.getAktualniPozice();
+        if (aktualniLokace == null) {
+            return "Nemůžu prozkoumat neznámou oblast.";
         }
 
-        if (lokace.getPredmet() != null) {
-            sb.append("Vidíš předmět: ").append(lokace.getPredmet().getNazev());
-        } else {
-            sb.append("Nevidíš žádné předměty.");
+        StringBuilder sb = new StringBuilder();
+
+        Postava postava = aktualniLokace.getPostava();
+        if (postava != null) {
+            sb.append("\n[Postava] ").append(postava.getJmeno());
+        }
+
+        ArrayList<Predmet> predmety = aktualniLokace.getPredmety();
+        if (!predmety.isEmpty()) {
+            if (sb.length() > 0) sb.append("\n");
+            sb.append("[Předměty]: ");
+            for (Predmet p : predmety) {
+                sb.append(p.getNazev()).append(", ");
+            }
+            sb.setLength(sb.length() - 2);
+        }
+
+        if (sb.length() == 0) {
+            return "Tato lokační je prázdná.";
         }
 
         return sb.toString();

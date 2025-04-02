@@ -1,11 +1,9 @@
 package Svet;
 
 public class Planeta extends Lokace {
-    public Planeta(String nazev, int id, String[] sousedi) {
-        super(nazev, id, sousedi);
+    public Planeta(String nazev, int id, String[] sousedi, String popis) {
+        super(nazev, id, sousedi, popis);
     }
 
-    public void vstoupit() {
-
-    }
+    public void vstoupit() {}
 }
