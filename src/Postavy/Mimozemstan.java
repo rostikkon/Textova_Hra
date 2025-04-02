@@ -1,6 +1,8 @@
 package Postavy;
 
 import Prikaz.Inventar;
+import Svet.Predmet;
+import Svet.Surovina;
 import Svet.SvetovaMapa;
 
 public class Mimozemstan extends Postava {
@@ -10,6 +12,11 @@ public class Mimozemstan extends Postava {
 
     @Override
     public String interakce() {
-        return "Mimozemšťan tě pozorně sleduje a čeká na tvou reakci.";
+        if (inventar.maPredmet("Jídlo")) {
+            inventar.odebratZInventare(new Surovina("Jídlo"));
+            svet.getAktualniPozice().pridejPredmet(new Surovina("Plazmový generátor"));
+            return "Mimozemšťan: 'Děkuji za jídlo! Předávám ti plazmový generátor.'";
+        }
+        return "Mimozemšťan: 'My dát plazmový generátor... za jídlo...'";
     }
 }

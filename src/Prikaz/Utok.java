@@ -3,7 +3,6 @@ package Prikaz;
 import Postavy.Hrac;
 import Postavy.Pirat;
 import Svet.Zbran;
-
 import java.util.Random;
 
 public class Utok implements Prikaz {
@@ -20,20 +19,12 @@ public class Utok implements Prikaz {
 
     @Override
     public String vykonej() {
-
-        if (inventar.maPredmet("Zbraň")) {
-            int sance = rand.nextInt(100);
-            if (sance > 80) {
-                return "Piráti vidí vaši zbraň a rozhodli se neútočit.";
-            }
-        }
-
         if (!inventar.maPredmet("Zbraň")) {
-            return "Nemáš zbraň! Piráti tě snadno přemohli. Konec hry.";
+            return "Nemáš zbraň! Nemůžeš bojovat.";
         }
 
         Zbran zbran = (Zbran) inventar.getPredmet("Zbraň");
-        System.out.println("Začíná boj s pirátem!");
+        System.out.println("Začíná boj s piráty!");
 
         while (hrac.getHp() > 0 && pirat.getHp() > 0) {
             int hracUtok = zbran.getDmg();
@@ -41,14 +32,17 @@ public class Utok implements Prikaz {
 
             pirat.utrzitZraneni(hracUtok);
             System.out.println("Zasáhl jsi piráta za " + hracUtok + " HP. Pirátský HP: " + pirat.getHp());
-
             if (pirat.getHp() <= 0) {
                 return "Piráti byli poraženi! Pokračuj v cestě.";
             }
 
             hrac.utrzitZraneni(piratUtok);
             System.out.println("Piráti tě zasáhli za " + piratUtok + " HP. Tvoje HP: " + hrac.getHp());
+            if (hrac.getHp() <= 0) {
+                return "Bohužel jsi zemřel. Konec hry.";
+            }
         }
+
         return "Bitva skončila.";
     }
 

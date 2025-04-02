@@ -1,10 +1,13 @@
 package Prikaz;
 
 import Postavy.Hrac;
+import Postavy.Pirat;
 import Svet.Palivo;
 import Svet.SvetovaMapa;
 import Svet.Lokace;
 import Prikaz.Inventar;
+
+import java.util.Random;
 import java.util.Scanner;
 
 public class Pohyb implements Prikaz {
@@ -12,6 +15,8 @@ public class Pohyb implements Prikaz {
     private Hrac hrac;
     private Inventar inventar;
     private Scanner scanner = new Scanner(System.in);
+    private Random rand = new Random();
+
 
     public Pohyb(SvetovaMapa svet, Hrac hrac, Inventar inventar) {
         this.svet = svet;
@@ -21,6 +26,7 @@ public class Pohyb implements Prikaz {
 
     @Override
     public String vykonej() {
+
         if (!inventar.maPredmet("Palivo")) {
             return "Nemáte dostatek paliva pro přesun!";
         }
@@ -52,13 +58,30 @@ public class Pohyb implements Prikaz {
             for (int idSouseda : aktualni.getSousedi()) {
                 if (idSouseda != -1) {
                     Lokace soused = svet.getLokace(idSouseda);
+
                     if (soused.getNazev().equalsIgnoreCase(cil)) {
+
+                        if (cil.equals("Planeta Zephyria") && !inventar.maPredmet("Amulet pravdy")) {
+                            return "Strážce: 'Bez amuletu pravdy tě nepustím dál!'";
+                        }
+
+                        if (cil.equals("Černá díra") && !inventar.maPredmet("Speciální štít")) {
+                            return "Gravitace černé díry je příliš silná! Potřebujete štít pro ochranu.";
+                        }
+
                         svet.setAktualniPozice(idSouseda);
                         System.out.println("Přesun na novou lokaci. Spotřebováno palivo.");
                         inventar.odebratZInventare(new Palivo());
 
-                        System.out.println(svet.getAktualniPozice().getZakladniPopis());
+                        int lokaceId = soused.getId();
+                        if ((lokaceId == 4 || lokaceId == 5 || lokaceId == 7) && rand.nextInt(3) == 0) {
+                            Pirat pirat = new Pirat(svet, inventar);
+                            System.out.println("Upozornění! Piráti tě objevili!");
+                            hrac.setPiratiVUtoku(true);
+                            return "Musíš bojovat nebo se pokusit uniknout! Použij příkaz 'utok' nebo 'unik'.";
+                        }
 
+                        System.out.println(svet.getAktualniPozice().getZakladniPopis());
                         return "";
                     }
                 }

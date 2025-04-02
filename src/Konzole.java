@@ -75,6 +75,12 @@ public class Konzole {
         svet.getLokace(0).nastavPostavu(new Vedec(svet, inventar) {
             @Override
             public String interakce() {
+                if (inventar.maPredmet("Hyperionový krystal") &&
+                        inventar.maPredmet("Plazmový generátor") &&
+                        inventar.maPredmet("Ionizační palivo")) {
+                    hrac.setHyperpohonOpraven(true);
+                    return "Dr. Novák: 'Všechny součástky jsou tu! Hyperpohon je opraven! Teď můžeš letět zpátky na Základnu.'";
+                }
                 return "Dr. Novák: 'Potřebujeme 3 komponenty pro opravu hyperpohonu:\n" +
                         "1. Hyperionový krystal (Zephyria)\n" +
                         "2. Plazmový generátor (Nixus)\n" +
@@ -82,27 +88,31 @@ public class Konzole {
             }
         });
         svet.getLokace(0).pridejPredmet(new Palivo());
-        svet.getLokace(0).pridejPredmet(new NavigacniCip());
+        svet.getLokace(0).pridejPredmet(new AmuletPravdy("Amulet pravdy"));
 
         svet.getLokace(1).nastavPostavu(new Strazce(svet, inventar) {
             @Override
             public String interakce() {
                 if (inventar.maPredmet("Amulet pravdy")) {
-                    return "Strážce: 'Můžeš projít, cizinče.'";
+                    return "Strážce: 'Můžeš projít, cizinče. Tvoje srdce je čisté.'";
                 }
                 return "Strážce: 'Bez amuletu pravdy tě nepustím dál!'";
             }
         });
-        svet.getLokace(1).pridejPredmet(new AmuletPravdy("Amulet pravdy"));
+        svet.getLokace(1).pridejPredmet(new NavigacniCip());
         svet.getLokace(1).pridejPredmet(Surovina.hyperionovyKrystal());
 
         svet.getLokace(2).nastavPostavu(new Mimozemstan(svet, inventar) {
             @Override
             public String interakce() {
+                if (inventar.maPredmet("Jídlo")) {
+                    inventar.odebratZInventare(new Surovina("Jídlo"));
+                    svet.getLokace(2).pridejPredmet(new Surovina("Plazmový generátor"));
+                    return "Mimozemšťan: 'Děkuji za jídlo! Předávám ti plazmový generátor.'";
+                }
                 return "Mimozemšťan: 'My dát plazmový generátor... za jídlo...'";
             }
         });
-        svet.getLokace(2).pridejPredmet(new Surovina("Plazmový generátor"));
         svet.getLokace(2).pridejPredmet(new Predmet("Jídlo") {
             @Override
             public String pouzit() {
@@ -113,27 +123,41 @@ public class Konzole {
         svet.getLokace(3).nastavPostavu(new Postava("Starý horník", svet, inventar, 100) {
             @Override
             public String interakce() {
-                return "Starý horník: 'Tady je spousta zbraní, pokud víš, jak je použít.'";
+                if (inventar.maPredmet("Energoprojektor")) {
+                    return "Starý horník: 'Vidím, že jsi našel mou zbraň. Dobrej vyběr!'";
+                }
+                return "Starý horník: 'Tady je spousta zbraní, pokud víš, jak je použít. Ale musíš mi nejdřív pomoci s jednou věcí...'";
             }
         });
         svet.getLokace(3).pridejPredmet(new Zbran("Energoprojektor", 15));
-        svet.getLokace(3).pridejPredmet(Surovina.ionizacniPalivo());
+        svet.getLokace(3).pridejPredmet(new Palivo());
 
         svet.getLokace(4).nastavPostavu(new Obchodnik(svet, inventar) {
             @Override
             public String interakce() {
-                return "Obchodník Zorx: 'Co chceš koupit nebo prodat?'";
+                if (inventar.maPredmet("Hyperionový krystal")) {
+                    inventar.odebratZInventare(new Surovina("Hyperionový krystal"));
+                    inventar.pridatDoInventare(new NavigacniCip());
+                    return "Obchodník Zorx: 'Dobrá výměna! Teď máš navigační čip.'";
+                } else if (inventar.maPredmet("Palivo")) {
+                    inventar.odebratZInventare(new Palivo());
+                    inventar.pridatDoInventare(new Zbran("Laserová zbraň", 10));
+                    return "Obchodník Zorx: 'Palivo za laserovou zbraň? To se dá udělat.'";
+                }
+                return "Obchodník Zorx: 'Co chceš koupit nebo prodat? Mám Hyperionový krystal a Laserovou zbraň.'";
             }
         });
         svet.getLokace(4).pridejPredmet(new Palivo());
         svet.getLokace(4).pridejPredmet(new Zbran("Laserová zbraň", 10));
 
-        svet.getLokace(5).pridejPredmet(new Predmet("Speciální štít") {
+        svet.getLokace(4).pridejPredmet(new Predmet("Speciální štít") {
             @Override
             public String pouzit() {
                 return "Aktivován štít pro ochranu před černou dírou.";
             }
         });
+
+        svet.getLokace(5).pridejPredmet(Surovina.ionizacniPalivo());
 
         svet.getLokace(6).nastavPostavu(new Vedec(svet, inventar) {
             @Override
@@ -161,6 +185,7 @@ public class Konzole {
         svet.nactiMapu();
         inventar = new Inventar();
         hrac = new Hrac(svet, inventar);
+        svet.setHrac(hrac);
 
         nastavPopisyLokaci();
         nastavPostavyAPredmety();
@@ -188,10 +213,17 @@ public class Konzole {
     private void vykonejPrikaz(String prikaz) {
         if (prikazy.containsKey(prikaz)) {
             String vysledek = prikazy.get(prikaz).vykonej();
+            if (vysledek.contains("Musíš bojovat")) {
+                prikazy.put("utok", new Utok(hrac, new Pirat(svet, inventar), inventar));
+                prikazy.put("unik", new Unik(hrac));
+            }
             System.out.println(vysledek);
             exit = prikazy.get(prikaz).ukoncit();
-        } else {
-            System.out.println("Neznámý příkaz. Napiš 'pomoc' pro seznam příkazů.");
+            if (hrac.isPiratiVUtoku() && (prikaz.equals("utok") || prikaz.equals("unik"))) {
+                hrac.setPiratiVUtoku(false);
+            } else {
+                System.out.println("Neznámý příkaz. Napiš 'pomoc' pro seznam příkazů.");
+            }
         }
     }
 }

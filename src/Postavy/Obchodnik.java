@@ -1,9 +1,7 @@
 package Postavy;
 
 import Prikaz.Inventar;
-import Svet.NavigacniCip;
-import Svet.SvetovaMapa;
-import Svet.Surovina;
+import Svet.*;
 
 public class Obchodnik extends Postava {
 
@@ -16,8 +14,12 @@ public class Obchodnik extends Postava {
         if (inventar.maPredmet("Hyperionový krystal")) {
             inventar.odebratZInventare(new Surovina("Hyperionový krystal"));
             inventar.pridatDoInventare(new NavigacniCip());
-            return "Obchodník Zorx říká: Děkuji za obchod! Předávám ti navigační čip.";
+            return "Obchodník Zorx: 'Dobrá výměna! Teď máš navigační čip.'";
+        } else if (inventar.maPredmet("Palivo")) {
+            inventar.odebratZInventare(new Palivo());
+            inventar.pridatDoInventare(new Zbran("Laserová zbraň", 10));
+            return "Obchodník Zorx: 'Palivo za laserovou zbraň? To se dá udělat.'";
         }
-        return "Obchodník Zorx říká: Máš něco na výměnu? Potřebuji Hyperionový krystal.";
+        return "Obchodník Zorx: 'Co chceš koupit nebo prodat? Mám Hyperionový krystal a Laserovou zbraň.'";
     }
 }

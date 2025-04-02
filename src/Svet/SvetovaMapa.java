@@ -12,6 +12,15 @@ import java.util.HashMap;
 public class SvetovaMapa {
     private HashMap<Integer, Lokace> svet = new HashMap<>();
     private int aktualniPozice = 0;
+    private Hrac hrac;
+
+    public void setHrac(Hrac hrac) {
+        this.hrac = hrac;
+    }
+
+    public Hrac getHrac() {
+        return hrac;
+    }
 
     public boolean nactiMapu() {
         try {

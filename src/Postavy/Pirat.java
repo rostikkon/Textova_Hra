@@ -16,6 +16,9 @@ public class Pirat extends Postava {
 
     public void utrzitZraneni(int dmg) {
         hp -= dmg;
+        if (hp <= 0) {
+            System.out.println("Pirátský velitel byl poražen!");
+        }
     }
 
     @Override

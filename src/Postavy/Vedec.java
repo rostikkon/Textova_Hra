@@ -11,10 +11,13 @@ public class Vedec extends Postava {
 
     @Override
     public String interakce() {
-        if (inventar.maPredmet("Plazmový generátor")) {
-            inventar.odebratZInventare(new Surovina("Plazmový generátor"));
-            return "Dr. Velkar říká: Skvělé! Opravil jsem tvůj hyperpohon.";
+        Hrac hrac = svet.getHrac();
+        if (inventar.maPredmet("Hyperionový krystal") &&
+                inventar.maPredmet("Plazmový generátor") &&
+                inventar.maPredmet("Ionizační palivo")) {
+            hrac.setHyperpohonOpraven(true);
+            return "Dr. Velkar: 'Všechny součástky jsou tu! Hyperpohon je opraven! Teď můžeš odletět domů.'";
         }
-        return "Dr. Velkar říká: Potřebuji nějaké technologie, abych ti mohl pomoci.";
+        return "Dr. Velkar: 'Potřebuji všechny tři suroviny pro opravu hyperpohonu.'";
     }
 }

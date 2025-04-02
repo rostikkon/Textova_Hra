@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Inventar implements Prikaz {
     private ArrayList<Predmet> inventar = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
-    private static final int MAX_KAPACITA = 5;
+    private static final int MAX_KAPACITA = 6;
 
     public boolean maPredmet(String nazev) {
         for (Predmet predmet : inventar) {

@@ -6,6 +6,15 @@ import Svet.SvetovaMapa;
 public class Hrac extends Postava {
     private int hp = 100;
     private boolean hyperpohonOpraven = false;
+    private boolean piratiVUtoku = false;
+
+    public boolean isPiratiVUtoku() {
+        return piratiVUtoku;
+    }
+
+    public void setPiratiVUtoku(boolean piratiVUtoku) {
+        this.piratiVUtoku = piratiVUtoku;
+    }
 
     public Hrac(SvetovaMapa svet, Inventar inventar) {
         super("Kapitán lodi Aurora", svet, inventar, 100);
