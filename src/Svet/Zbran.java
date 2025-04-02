@@ -16,6 +16,5 @@ public class Zbran extends Predmet {
     public String pouzit() {
         return "Použil jsi zbraň " + getNazev() + " a způsobil " + dmg + " poškození!";
     }
-
 }
 

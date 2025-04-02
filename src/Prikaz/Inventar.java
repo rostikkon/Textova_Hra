@@ -4,12 +4,20 @@ import Svet.Predmet;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
+/**
+ * Třída představující inventář hráče.
+ */
 public class Inventar implements Prikaz {
     private ArrayList<Predmet> inventar = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
     private static final int MAX_KAPACITA = 6;
 
+    /**
+     * Zjistí, zda inventář obsahuje daný předmět.
+     *
+     * @param nazev Název předmětu.
+     * @return {@code true}, pokud předmět existuje, jinak {@code false}.
+     */
     public boolean maPredmet(String nazev) {
         for (Predmet predmet : inventar) {
             if (predmet.getNazev().equalsIgnoreCase(nazev)) {

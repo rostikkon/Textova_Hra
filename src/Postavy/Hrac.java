@@ -3,6 +3,9 @@ package Postavy;
 import Prikaz.Inventar;
 import Svet.SvetovaMapa;
 
+/**
+ * Třída představující hráče.
+ */
 public class Hrac extends Postava {
     private int hp = 100;
     private boolean hyperpohonOpraven = false;

@@ -5,14 +5,25 @@ import java.util.Arrays;
 import Postavy.*;
 import Prikaz.*;
 
+/**
+ * Třída představující lokaci ve hře.
+ */
 public class Lokace {
-    private String nazev;
-    private int id;
-    private int[] sousedi;
-    private Postava postava;
-    private ArrayList<Predmet> predmety;
-    private String popis;
+    private String nazev; // Název lokace
+    private int id; // ID lokace
+    private int[] sousedi; // Pole sousedních lokací
+    private Postava postava; // Postava v lokaci
+    private ArrayList<Predmet> predmety; // Seznam předmětů v lokaci
+    private String popis; // Popis lokace
 
+    /**
+     * Konstruktor lokace.
+     *
+     * @param nazev   Název lokace.
+     * @param id      ID lokace.
+     * @param sousedi Pole sousedních lokací.
+     * @param popis   Popis lokace.
+     */
     public Lokace(String nazev, int id, String[] sousedi, String popis) {
         this.nazev = nazev;
         this.id = id;
@@ -25,10 +36,20 @@ public class Lokace {
         this.popis = popis;
     }
 
+    /**
+     * Vrátí základní popis lokace.
+     *
+     * @return Základní popis lokace.
+     */
     public String getZakladniPopis() {
         return "== " + nazev + " ==\n" + popis;
     }
 
+    /**
+     * Vrátí podrobný popis lokace včetně postav a předmětů.
+     *
+     * @return Podrobný popis lokace.
+     */
     public String getPodrobnyPopis() {
         StringBuilder sb = new StringBuilder();
         sb.append("=== ").append(nazev).append(" ===\n");
@@ -62,6 +83,12 @@ public class Lokace {
         this.predmety.add(predmet);
     }
 
+    /**
+     * Provede akci lokace (např. boj nebo dialog).
+     *
+     * @param hrac     Aktuální hráč.
+     * @param inventar Inventář hráče.
+     */
     public void provedAkce(Hrac hrac, Inventar inventar) {
         System.out.println(getZakladniPopis());
     }

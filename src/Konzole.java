@@ -3,16 +3,21 @@ import Postavy.*;
 import Svet.*;
 import java.util.HashMap;
 import java.util.Scanner;
-
+/**
+ * Třída představující textové rozhraní pro správu a spuštění her.
+ */
 public class Konzole {
-    private boolean exit = false;
-    private Scanner scanner = new Scanner(System.in);
-    private HashMap<String, Prikaz> prikazy = new HashMap<>();
-    private SvetovaMapa svet;
-    private Inventar inventar;
-    private Hrac hrac;
-    private Pirat pirat;
+    private boolean exit = false; // Indikátor ukončení hry
+    private Scanner scanner = new Scanner(System.in); // Nástroj pro čtení vstupu od uživatele
+    private HashMap<String, Prikaz> prikazy = new HashMap<>(); // Mapa dostupných příkazů
+    private SvetovaMapa svet; // Světová mapa s lokacemi
+    private Inventar inventar; // Inventář hráče
+    private Hrac hrac; // Objekt hráče
+    private Pirat pirat; // Objekt pirátů
 
+    /**
+     * Inicializuje dostupné příkazy pro hráče.
+     */
     public void inicializace() {
         prikazy.put("jdi", new Pohyb(svet, hrac, inventar));
         prikazy.put("konec", new Konec());
@@ -28,6 +33,9 @@ public class Konzole {
         prikazy.put("unik", new Unik(hrac));
     }
 
+    /**
+     * Nastavuje popisy jednotlivých lokací na mapě.
+     */
     private void nastavPopisyLokaci() {
         svet.getLokace(0).setPopis(
                 "Hlavní velitelské centrum lodi Aurora.\n" +
@@ -71,6 +79,9 @@ public class Konzole {
         );
     }
 
+    /**
+     * Nastavuje postavy a předměty v jednotlivých lokacích.
+     */
     private void nastavPostavyAPredmety() {
         svet.getLokace(0).nastavPostavu(new Vedec(svet, inventar) {
             @Override
@@ -180,6 +191,9 @@ public class Konzole {
         });
     }
 
+    /**
+     * Spouští hlavní herní smyčku.
+     */
     public void start() {
         svet = new SvetovaMapa();
         svet.nactiMapu();
@@ -203,6 +217,9 @@ public class Konzole {
         }
     }
 
+    /**
+     * Kontroluje, zda hráč vyhrál hru.
+     */
     private void kontrolaVyhry() {
         if (svet.getAktualniPozice().getId() == 0 && hrac.isHyperpohonOpraven()) {
             System.out.println("Gratulujeme! Úspěšně jste opravili hyperpohon a vrátili se na základnu!");
@@ -210,6 +227,11 @@ public class Konzole {
         }
     }
 
+    /**
+     * Vykonává daný příkaz zadáný hráčem.
+     *
+     * @param prikaz Název příkazu zadáný hráčem.
+     */
     private void vykonejPrikaz(String prikaz) {
         if (prikazy.containsKey(prikaz)) {
             String vysledek = prikazy.get(prikaz).vykonej();
