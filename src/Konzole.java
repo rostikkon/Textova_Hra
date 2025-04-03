@@ -241,10 +241,10 @@ public class Konzole {
             }
             System.out.println(vysledek);
             exit = prikazy.get(prikaz).ukoncit();
+        } else {
+            System.out.println("Neznámý příkaz. Napiš 'pomoc' pro seznam příkazů.");
             if (hrac.isPiratiVUtoku() && (prikaz.equals("utok") || prikaz.equals("unik"))) {
                 hrac.setPiratiVUtoku(false);
-            } else {
-                System.out.println("Neznámý příkaz. Napiš 'pomoc' pro seznam příkazů.");
             }
         }
     }
