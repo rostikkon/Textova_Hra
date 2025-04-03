@@ -39,7 +39,7 @@ public class Prozkoumat implements Prikaz {
         }
 
         if (sb.length() == 0) {
-            return "Tato lokační je prázdná.";
+            return "Tato lokace je prázdná.";
         }
 
         return sb.toString();

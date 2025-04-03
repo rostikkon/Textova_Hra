@@ -1,7 +1,6 @@
 package Testy;
 
 import static org.junit.jupiter.api.Assertions.*;
-import Prikaz.Konec;
 import Prikaz.Pomoc;
 import org.junit.jupiter.api.Test;
 
